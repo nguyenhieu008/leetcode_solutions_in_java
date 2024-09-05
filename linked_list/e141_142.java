@@ -46,4 +46,39 @@ public class Solution {
         return false;
     }
 }
+
+// https://leetcode.com/problems/linked-list-cycle-ii/description/
+/* Follow up for Solution 2: doing some math, assume:
+- 1st node of cycle: x steps from head;
+- 2 Pointers meet at (x + y) steps => slow = (x + y) steps, fast = (x + x) + (y + y) steps => cycle length = (x + y)
+=> If now, slow runs from head x steps => it reaches the 1st node of cycle
+	fast runs from meet point x steps => it reaches node (x + y) + x = x + (y + x) = x + cycle length => 1st node of cycle
+	*/
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        boolean meet = false;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                meet = true;
+                break;
+            }
+        }
+
+        if (meet == false) {
+            return null;
+        }
+
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+}
   
