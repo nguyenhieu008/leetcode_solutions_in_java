@@ -49,5 +49,19 @@ class Solution {
         }
         return slow;
     }
-    
+}
+
+/* Same as Soution 2 but better implementation
+- Base on Solution 1, if we can move the fast pointer 2 steps (even if move to the null pointer) -> we can move slow pointer 1 step.
+	*/
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow, fast;
+        slow = fast = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
 }
