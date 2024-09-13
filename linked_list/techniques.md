@@ -22,3 +22,5 @@ Their next meeting node is the start node of the cycle.
 - For example:
   - reverse a list of N pointers is link the last node to the start of a list with (N - 1) nodes that has been reversed already. Then do it from small to large (dynamic programming)
   - Do some thing with cur node, then call the recursion with the next node.
+
+4. Reverse inplace.
