@@ -17,3 +17,8 @@ Their next meeting node is the start node of the cycle.
   - Then move them with same speed. So, when fast pointer reaches the end of the list, slow pointer also reaches a target node at the same time.
   - This technique can be used to get the node with distance k from the end of the list, with 1 for loop only.
 
+3. Recursion, dynamic programming.
+- We can think of problems on linked list in resursive approach.
+- For example:
+  - reverse a list of N pointers is link the last node to the start of a list with (N - 1) nodes that has been reversed already. Then do it from small to large (dynamic programming)
+  - Do some thing with cur node, then call the recursion with the next node.
