@@ -1,5 +1,26 @@
 // https://leetcode.com/problems/count-good-meals/
 
+// Solution 2: cleaner version, no need for array to store target, we loop by the power mean 2^x => clean code.
+
+class Solution {
+    public int countPairs(int[] deliciousness) {
+        final int MOD = (int) 1e9 + 7;
+
+        HashMap<Integer, Integer> count = new HashMap<>();
+
+        int res = 0;
+        for (int d : deliciousness) {
+            for (int power = 1; power <= (1 << 21); power <<= 1) {
+                if (count.containsKey(power - d)) {
+                    res = (res + count.get(power - d)) % MOD;    
+                }
+            }
+            count.put(d, count.getOrDefault(d, 0) + 1);
+        }
+        return res;
+    }
+}
+
 // Because max is 2^20 + 2^20 = 2^21 => targets is from 1, 2, ..., 2^21
 // We store all the targets and maintain a hash map to count how many times an item appears.
 // For each item d, we need to loop 22 times to find 22 possible complements of d then add their appearance to result.
