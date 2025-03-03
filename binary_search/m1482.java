@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/
+
 // Solution: If (m * k) > n => we can always have result, just be careful that (m * k) can exceed integer.
 // In order to make a bouquet, we can use greedy approach - use a first flower we see to make the bouquet if possible, because it guarantees the maximum number of bouquets.
 // Usual binary search, because the result always exists and if canMake => r = mid, so, we just return r. Notice that, after the while, l == r always.
