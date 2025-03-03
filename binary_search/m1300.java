@@ -46,3 +46,20 @@ class Solution {
         return sum - target;
     }
 }
+
+// Solution 2: just for reference, copied from leetcode
+// Sort ascending then try the value from left to right, if a[i] is not the value, we can remove it from the target and go on.
+// Although this solution is interesting, it's not recommended when interview as it too difficult to reasoning.
+
+public int findBestValue(int[] A, int target) {
+    Arrays.sort(A);
+    int n = A.length, i = 0;
+    while (i < n && target > A[i] * (n - i)) {
+        target -= A[i++];
+    }
+    if (i == n) return A[n - 1];
+    int res = target / (n - i);
+    if (target - res * (n - i) > (res + 1) * (n - i) - target)
+        res++;
+    return res;
+}
