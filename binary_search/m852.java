@@ -1,6 +1,7 @@
 // https://leetcode.com/problems/peak-index-in-a-mountain-array/
 
-// Solution: If 2 adjacent items, we always have 1
+// Solution: For 2 adjacent items, we always have greater one. So, we should proceed with the greater part. Because the peak is always the greatest one.
+
 class Solution {
     public int peakIndexInMountainArray(int[] arr) {
         int l = 0, r = arr.length - 1;
