@@ -2,6 +2,10 @@
 
 // Solution: Notice that the index 0, and n-1, in considered > than adjacent => we will always have peaks, even if the inner items are decreasing, two ends of array are peaks.
 // Now, let take an example, x denotes that items are less than the adjacent, so we have an array that both ends are greater than the adjacent items:
+// Using the formula:
+// if (nums[mid] < nums[mid + 1]) l = mid + 1;
+//     else r = mid;
+// So we choose the larger one between the two, then erase the whole other side, and still guarantee: the adjacent item at the other is less than the end of current array.
 // [x] 1 2 3 4 5 6 7 [x], mid = 4 => x x x x 5 6 7 x 
 // Because for peak, we only care about the adjacent item, so we remove the whole left of the mid (including mid). 
 // We still guarantee: "an array that both ends are greater than the adjacent items (x 5 6 7 x)"
