@@ -1,5 +1,11 @@
 // https://leetcode.com/problems/single-element-in-a-sorted-array/description/
 
+// Solution: We divide by 2, if number of items on the right is odd, and nums[mid] == nums[mid+1] => the single item is on the right => keep searching on the right.
+// Keep doing it until we got 3 items subarray, then single item will be r or l. Be aware that we should keep l and r not be the same. Otherwise, we will loop forever with "l = mid"
+
+// Time complexity: O(logn)
+// Space complexity: O(1);
+
 class Solution {
     public int singleNonDuplicate(int[] nums) {
         int n = nums.length;
