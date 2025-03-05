@@ -35,3 +35,23 @@ class Solution {
         return nums[r];
     }
 }
+
+// Solution 2: If not add 1 single item => the pair first item is always at even index, and second item is at odd index.
+// If add the single item => the next pairs indexes are reversed
+// So we check if the mid is single or odd and check the proper pair index, to determine the next halp to search.
+
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int l = 0, r = nums.size();
+        while (r - l > 1) {
+            int mid = l + (r - l) / 2;
+            if ((mid % 2 == 0 && nums[mid] != nums[mid-1]) || (mid % 2 == 1 && nums[mid] == nums[mid-1])) {
+                l = mid;
+            } else {
+                r = mid;
+            }
+        }
+        return nums[l];
+    }
+};
