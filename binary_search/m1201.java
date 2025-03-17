@@ -22,7 +22,7 @@ public class Solution {
         return a * b / gcd(a, b);
     }
 
-    private boolean greaterEuqalThanN(long v, long n, long a, long b, long c) {
+    private boolean greaterEqualThanN(long v, long n, long a, long b, long c) {
         long numUgly = (v / a + v / b + v / c) 
                 - (v / lcm(a, b)) 
                 - (v / lcm(a, c))
@@ -36,7 +36,7 @@ public class Solution {
 
         while (r - l > 0) {
             int mid = l + (r - l) / 2;
-            if (greaterEuqalThanN(mid, n, a, b, c)) {
+            if (greaterEqualThanN(mid, n, a, b, c)) {
                 r = mid;
             } else {
                 l = mid + 1;
