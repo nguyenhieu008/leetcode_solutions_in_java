@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/description/
+
 // Solution: We keep track counts, when a window (subarray) satisfies the condition, we add all subarrays start from l to the end to the res, 
 // it is (r - l), because we all remaining (r - l) ends for the subarray start from l will also satisfy the condition.
 
