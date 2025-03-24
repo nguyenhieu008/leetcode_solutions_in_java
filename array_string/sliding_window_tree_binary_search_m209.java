@@ -72,3 +72,87 @@ class Solution {
         return res % (n + 1);
     }
 }
+
+// Solution 3: We binary search the window size, choose the minimum possible window that has sum >= target. 
+// Because if windows grows, the sum of the window also grows => it satisfy the binary search condition
+// The code is clear, just need to init (r = n + 1) so the left and mid pointer will never exceed array indexes (if reach n+1, then the loop ends already)
+// And we can return l % (n + 1);
+
+// Time complexity: O(nlogn)
+// Space complexity: O(1)
+
+class Solution {
+    private boolean windowExist(int[] a, int size, int target) {
+        int n = a.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += a[i];
+            if (i >= size) {
+                sum -= a[i - size];
+            }
+            if (sum >= target) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int minSubArrayLen(int target, int[] nums) {
+        int n = nums.length;
+        int l = 0, r = n + 1;
+
+        while (r - l > 0) {
+            int mid = l + (r - l) / 2;
+            if (windowExist(nums, mid, target)) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+
+        return l % (n + 1);
+    }
+}
+
+// Solution 4: Binary search using prefix sum, sum must be the smallest one that >= (prefix + target).
+// Send index from-to to the binary search, the to is (n + 1), which is the size of array prefixSum, it means the index can never reach here.
+// If l == (n + 1) => we cannot find the sum, and go with larger ones will also cannot find the one we want => we break asap.
+
+// Time complexity: O(nlogn)
+// Space complexity: O(n);
+
+class Solution {
+    private int greaterEqual(int[] a, int from, int to, int target) {
+        int l = from, r = to;
+        while (r - l > 0) {
+            int mid = l + (r - l) / 2;
+
+            if (a[mid] >= target) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+
+    public int minSubArrayLen(int target, int[] nums) {
+        int n = nums.length;
+        int[] prefixSum = new int[n + 1];
+        prefixSum[0] = 0;
+        int res = n + 1;
+
+        for (int i = 0; i < n; i++) {
+            prefixSum[i + 1] = prefixSum[i] + nums[i];
+        }
+
+        for (int i = 0; i < n; i++) {
+            int j = greaterEqual(prefixSum, i + 1, n + 1, prefixSum[i] + target);
+            // If cannot find greater than this prefix => Later prefix will get bigger => also cannot find
+            if (j == n + 1) break;
+            res = Math.min(res, j - i);
+        }
+
+        return res % (n + 1);
+    }
+}
