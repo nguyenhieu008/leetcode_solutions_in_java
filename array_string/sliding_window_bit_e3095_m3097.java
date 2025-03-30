@@ -31,14 +31,12 @@ class Solution {
         }
         return orVal;
     }
-
     public int minimumSubarrayLength(int[] nums, int k) {
         int n = nums.length;
         int[] bitCount = new int[32];
         int orVal = 0;
-
+        
         int l = 0, res = Integer.MAX_VALUE;
-
         for (int r = 0; r < n; r++) {
             orVal = doOr(bitCount, orVal, nums[r]);
 
