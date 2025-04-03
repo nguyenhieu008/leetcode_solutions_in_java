@@ -10,6 +10,9 @@
 //     => if peak at 100 => total sum = 80 + 90 + 100 + 1 + 1 = 272
 //     => if peak at 101 => total sum = 1 + 1 + 1 + 1 + 101 = 105
 //   => We should not assume the peak is the largest one, rather we need to try every peak to find the maximum.
+// Since the constraints is possible, we can use brute force solution:
+//     1 <= n == heights.length <= 103
+//     1 <= heights[i] <= 109
 //
 // Time complexity: O(n^2)
 // Space complexity: O(1);
