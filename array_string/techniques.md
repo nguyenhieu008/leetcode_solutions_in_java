@@ -15,6 +15,7 @@
 * When it's hard to sovle the problem as a range, try to calculate at each item and contribute it to the final result, e.g. [trapping rain water](https://leetcode.com/problems/trapping-rain-water/description/)
 * Whether we can preprocess to make the problem easier:
   * Sort
+  * Add all items to a hash table
   * Calculate max/min item form both left and right direction
   * Calculate prefix sum/product from both left and right direction
   * ...
