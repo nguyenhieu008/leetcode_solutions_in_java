@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/isomorphic-strings/
+
 // Solution 2: Instead of mapping from/to 2 strings, we map both of them to same values, it is:
 //   - If both characters point to same value => okay then continue
 //   - Can map to any integer, (i + 1) guarantee the uniqueness. (i + 1) is important, because i can == 0 => it will fail on the very first character.
