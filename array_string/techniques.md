@@ -13,6 +13,7 @@
     * need to handle the first case carefully, because all items are here, initiazlied to 0. Where as in hash table, if not put into table => the item will be null or containsKey return false => easy check
 * When need to compare a -> b and b -> a, we can map both of them to the same value, e.g. [isomorphic string](https://leetcode.com/problems/isomorphic-strings/)
 * When it's hard to sovle the problem as a range, try to calculate at each item and contribute it to the final result, e.g. [trapping rain water](https://leetcode.com/problems/trapping-rain-water/description/)
+* Sometimes, process an item in the middle of something is difficult. We can restrict to only process at one end to the other end for easier (e.g. sort the array and go from smaless one, ...)
 * Whether we can preprocess to make the problem easier:
   * Sort
   * Add all items to a hash table
