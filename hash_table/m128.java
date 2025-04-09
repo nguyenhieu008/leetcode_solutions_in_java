@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/longest-consecutive-sequence/
+
 // Solution 2: I preprocess by adding all items to a set
 // The for all items in nums, I check it in the set, and search to 2 directions to get the maximum contiguous sequence if possible. Then remove items on the path, and update the result.
 // Time complexity: O(n)
