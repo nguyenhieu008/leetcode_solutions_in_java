@@ -20,6 +20,10 @@
   * Calculate max/min item form both left and right direction
   * Calculate prefix sum/product from both left and right direction
   * ...
+* When the solution is unclear and we have some directions must deal with, e.g. (Kadane in circular)[https://leetcode.com/problems/maximum-sum-circular-subarray/description/], we can list out the possible cases for solutions, then handle those cases separately (in Kadane circular, we calculate minSum and maxSum separately to handle both cases)
+* Sometimes, we apply some restrictions when processing then we no need to deal with complicated situation where the duplicates input make noise to the result, e.g.:
+  *  (Ways to split)[https://github.com/nguyenhieu008/leetcode_solutions_in_java/blob/main/array_string/sliding_window_binary_search_m1712.java] : (Keep condition "while (k < j ||" make it wont' add negative value to the result
+  *  (Longest consecutive subsequency)[https://github.com/nguyenhieu008/leetcode_solutions_in_java/blob/main/hash_table/m128.java] : When adding item to set, avoid number already used => the new number will not be inside of a contiguous sequence => easier to handle.
  
 ## Sliding window
 #### Substring
