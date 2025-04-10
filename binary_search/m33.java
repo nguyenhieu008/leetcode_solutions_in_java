@@ -112,3 +112,35 @@ public int search(int[] nums, int target) {
     }
     return -1;
 }
+
+
+// Solution 3: just reference: 
+// https://leetcode.com/problems/search-in-rotated-sorted-array/solutions/14435/clever-idea-making-it-simple/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution {
+    public int search(int[] nums, int target) {
+        // ascending order, distinct values
+        int l = 0, r = nums.length - 1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            int virtualNumAtMid = nums[mid];
+
+            if (!((nums[mid] < nums[l]) == (target < nums[l]))) {
+                if (target < nums[l]) {
+                    virtualNumAtMid = Integer.MIN_VALUE;
+                } else {
+                    virtualNumAtMid = Integer.MAX_VALUE;
+                }
+            }
+
+            if (virtualNumAtMid < target) {
+                l = mid + 1;
+            } else if (virtualNumAtMid > target) {
+                r = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }   
+}
