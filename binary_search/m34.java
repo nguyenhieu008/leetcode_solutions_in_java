@@ -1,9 +1,32 @@
 // https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/
 
+// Solution 2: Use greaterThanOrEqualTo search
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int startIdx = greaterOrEqual(nums, target);
+        int endIdx = greaterOrEqual(nums, target + 1);
+        if (startIdx == nums.length || nums[startIdx] != target) {
+            return new int[]{-1, -1};
+        }
+        return new int[]{startIdx, endIdx - 1};
+    }
+
+    private int greaterOrEqual(int[] nums, int target) {
+        int l = 0, r = nums.length;
+        while (r - l > 0) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] >= target) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+}
+
 // For the start of Range, if the mid == target, we still need to search to the left => set r = mid => if amid >= target, r = mid. => the start of range always at r or -1.
 // Do the same with left
-
-
 
 class Solution {
     public int[] searchRange(int[] nums, int target) {
