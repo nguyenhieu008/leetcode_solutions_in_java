@@ -1,5 +1,29 @@
 // https://leetcode.com/problems/partition-list/description/
 
+// Solution 3: self-done. Same as solution 2.
+
+class Solution {
+    public ListNode partition(ListNode head, int x) {
+        ListNode dummyHeadLess = new ListNode();
+        ListNode dummyHeadGreater = new ListNode();
+        ListNode node = head, nodeLess = dummyHeadLess, nodeGreater = dummyHeadGreater;
+
+        while (node != null) {
+            if (node.val < x) {
+                nodeLess.next = node;
+                nodeLess = nodeLess.next;
+            } else {
+                nodeGreater.next = node;
+                nodeGreater = nodeGreater.next;
+            }
+            node = node.next;
+        }
+        nodeLess.next = dummyHeadGreater.next;
+        nodeGreater.next = null;
+        return dummyHeadLess.next;
+    }
+}
+
 /* Solution 1:
 - We keep track the end of partition 1, and the start of partition 2, by running a loop until found the first one that >= x.
 - After that, we traverse the list from the next item of the start-of-partition-2. If we find a value < x, we move it to the end-of-p1 and concat with the start-of-p2.
