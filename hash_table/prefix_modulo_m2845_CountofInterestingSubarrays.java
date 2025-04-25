@@ -50,3 +50,23 @@ class Solution {
         return res;
     }
 }
+
+// Solution 2: Same as solution 1 but store the frequency by hash map
+class Solution {
+    public long countInterestingSubarrays(List<Integer> nums, int modulo, int k) {
+        int n = nums.size();
+        HashMap<Integer, Integer> prefixSumModulo = new HashMap<>(Map.of(0, 1));
+        int curSum = 0;
+
+        long res = 0;
+        for (int v : nums) {
+            if (v % modulo == k) {
+                curSum = (curSum + 1) % modulo;
+            }
+            int targetIdx = (curSum - k + modulo) % modulo;
+            res += prefixSumModulo.getOrDefault(targetIdx, 0);
+            prefixSumModulo.put(curSum, prefixSumModulo.getOrDefault(curSum, 0) + 1);
+        }
+        return res;
+    }
+}
