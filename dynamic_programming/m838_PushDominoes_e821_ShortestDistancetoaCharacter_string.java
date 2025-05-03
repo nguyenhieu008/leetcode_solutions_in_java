@@ -61,3 +61,37 @@ class Solution {
         return new String(res);
     }
 }
+
+// https://leetcode.com/problems/shortest-distance-to-a-character/
+class Solution {
+    public int[] shortestToChar(String s, char c) {
+        int n = s.length();
+        int[] distanceLeft = new int[n], distanceRight = new int[n];
+        int prev = n;
+
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == c) {
+                prev = 0;
+            } else {
+                prev++; // if no c on the left, the distance can be > n, it's does not have negative impact, because the c is guaranteed to exist
+            }
+            distanceLeft[i] = prev;
+        }
+
+        prev = n;
+        for (int i = n - 1; i >= 0; i--) {
+            if (s.charAt(i) == c) {
+                prev = 0;
+            } else {
+                prev++; // Same, prev can > n
+            }
+            distanceRight[i] = prev;
+        }
+        
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            res[i] = Math.min(distanceLeft[i], distanceRight[i]);
+        }
+        return res;
+    }
+}
