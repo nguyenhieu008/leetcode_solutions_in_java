@@ -1,3 +1,56 @@
+// https://leetcode.com/problems/course-schedule-ii/
+// topo sort
+class Solution {
+    public int[] findOrder(int n, int[][] ps) {
+        List<Integer>[] g = buildGraph(n, ps);
+
+        // number of requirements for a course
+        int[] inDegs = new int[n];
+        for (int[] p : ps) {
+            inDegs[p[0]]++;
+        }
+
+        // Add courses without requirements
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (inDegs[i] == 0) {
+                q.offer(i);
+            }
+        }
+
+        List<Integer> res = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int a = q.poll();
+            res.add(a);
+
+            List<Integer> adjNodes = g[a];
+            for (int adjNode : adjNodes) {
+                inDegs[adjNode]--;
+                if(inDegs[adjNode] == 0) {
+                    q.offer(adjNode);
+                }
+            }
+        }
+        if (res.size() == n) {
+            return res.stream().mapToInt(Integer::intValue).toArray();
+        }
+        return new int[0];
+    }
+
+    private List<Integer>[] buildGraph(int n, int[][] ps) {
+        List<Integer>[] g = new List[n];
+        for (int i = 0; i < n; i++) {
+            g[i] = new ArrayList<>();
+        }
+        for (int[] p : ps) {
+            int a = p[0], b = p[1];
+            g[b].add(a);
+        }
+        return g;
+    }
+}
+
+// https://leetcode.com/problems/course-schedule/description/
 // Solution 2: topo-sort.
 
 
