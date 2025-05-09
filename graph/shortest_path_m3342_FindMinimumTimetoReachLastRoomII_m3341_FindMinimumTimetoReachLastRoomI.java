@@ -1,5 +1,5 @@
 // https://leetcode.com/problems/find-minimum-time-to-reach-last-room-ii/description/
-// Solution: Djistra heap
+// Solution: Djikstra heap
 
 class Solution {
     class Point implements Comparable<Point> {
@@ -69,5 +69,66 @@ class Solution {
     // This is the same, regardless of the the path (longer path will yield the same cost)
     private int cost(int i, int j) {
         return 2 - ((i + j) % 2);
+    }
+}
+
+// https://leetcode.com/problems/find-minimum-time-to-reach-last-room-i/description/
+// Solution: Dijkstra heap
+class Solution {
+    class Node implements Comparable<Node> {
+        int x;
+        int y;
+        int time;
+
+        Node(int x, int y, int time) {
+            this.x = x;
+            this.y = y;
+            this.time = time;
+        }
+
+        @Override 
+        public int compareTo(Node a) {
+            return Integer.compare(this.time, a.time); // min heap
+        }
+    }
+
+    public int minTimeToReach(int[][] moveTime) {
+        int n = moveTime.length, m = moveTime[0].length;
+        boolean[][] visited = new boolean[n][m];
+        int[][] dp = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        }
+
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        pq.offer(new Node(0, 0, 0));
+        dp[0][0] = 0;
+
+        int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        while (!pq.isEmpty()) {
+            Node node = pq.poll();
+            int row = node.x, col = node.y;
+
+            if (visited[row][col]) continue;
+            visited[row][col] = true;
+
+            if (row == n - 1 && col == m - 1) {
+                return node.time;
+            }
+
+            for (int[] d : dirs) {
+                int nRow = row + d[0], nCol = col + d[1];
+
+                if (nRow < 0 || nRow >= n || nCol < 0 || nCol >= m) continue;
+                int nextTime = Math.max(moveTime[nRow][nCol], dp[row][col]) + 1;
+
+                if (nextTime < dp[nRow][nCol]) {
+                    dp[nRow][nCol] = nextTime;
+                    pq.offer(new Node(nRow, nCol, nextTime));
+                }
+            }
+        }
+        return dp[n-1][m-1]; // should not reach here
     }
 }
