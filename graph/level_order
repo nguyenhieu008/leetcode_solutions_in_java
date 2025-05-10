@@ -1,0 +1,49 @@
+// https://leetcode.com/problems/minimum-genetic-mutation/
+
+
+// Solution 1: Because bank length is small (<= 10), so we can check the next node by checking all possible nodes left in the bank
+// Time complexity: O(m * m + m * 8), where m is bank size => O(m^2)
+// Space complexity: O(m);
+
+class Solution {
+    public int minMutation(String startGene, String endGene, String[] bank) {
+        Queue<String> q = new LinkedList<>();
+        boolean[] visited = new boolean[bank.length];
+        int steps = 0;
+
+        q.offer(startGene);
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                String cur = q.poll();
+
+                if (cur.equals(endGene)) {
+                    return steps;
+                }
+                
+                for (int j = 0; j < bank.length; j++) {
+                    if (visited[j]) continue;
+                    String s = bank[j];
+                    
+                    if (isValidMutation(cur, s)) {
+                        q.offer(s);
+                        visited[j] = true;;
+                    }
+                }
+            }
+            steps++;
+        }
+        return -1;
+    }
+    
+    private boolean isValidMutation(String cur, String s) {
+        int diff = 0;
+        for (int sIdx = 0; sIdx < 8; sIdx++) {
+            if (s.charAt(sIdx) != cur.charAt(sIdx)) {
+                diff++;
+            }
+        }
+        return diff == 1;
+    }
+}
