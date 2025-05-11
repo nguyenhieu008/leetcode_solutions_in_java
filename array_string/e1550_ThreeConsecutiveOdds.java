@@ -1,5 +1,7 @@
 // https://leetcode.com/problems/three-consecutive-odds/
 
+// Notice: we can optimize a bit by using iterative approach and count number of odds => O(n) instead of O(3n)
+
 class Solution {
     public boolean threeConsecutiveOdds(int[] arr) {
         int n = arr.length;
