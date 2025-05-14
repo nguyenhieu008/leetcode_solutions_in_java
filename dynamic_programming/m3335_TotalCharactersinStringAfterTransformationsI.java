@@ -1,6 +1,7 @@
 // https://leetcode.com/problems/total-characters-in-string-after-transformations-i/description/
 
 // Solution 2: DP:
+// Reference: https://leetcode.com/problems/total-characters-in-string-after-transformations-i/solutions/6738976/dp-simulation-with-images-example-walkthrough-c-python-java/
 // dp[i] = numbers of characters we get if we start from 'a' and apply i transformations.
 // Let's examine:
 // t:        1    2            25
