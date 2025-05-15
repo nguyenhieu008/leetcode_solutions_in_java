@@ -38,6 +38,33 @@ class Solution {
 
 // Solution 3: 2-d dp. Reference: https://leetcode.com/problems/longest-palindromic-substring/solutions/3598120/longest-palindromic-substring/
 
+// Solution 1a: self-done: Same as solution 1 but better code by myself;
+class Solution {
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        // left end of any palindromes that end at a specific index
+        List<Integer> leftEnds = new ArrayList<>();
+
+        int left = 0, right = 0; // left, right-ends of the longest
+        for (int i = 0; i < n; i++) {
+            List<Integer> newLeftEnds = new ArrayList<>();
+            for (int l : leftEnds) {
+                if (l > 0 && s.charAt(l - 1) == s.charAt(i)) {
+                    newLeftEnds.add(l - 1);
+                    if (i - (l - 1) > (right - left)) {
+                        left = l - 1;
+                        right = i;
+                    }
+                }
+            }
+            newLeftEnds.add(i); // palindrome of 1 character
+            newLeftEnds.add(i + 1); // palindrome of 0 character
+            leftEnds = newLeftEnds;
+        }
+        return s.substring(left, right + 1);
+    }
+}
+
 // Solution 1: self-done. At each i, we must append the palindrome to (i - 1) => We add all palindromes that ends at current index to a queue, pop them all for the next index.
 // Notice that, we need to add the current index as well, as it 1-length palinedrome. previous (i-1) if s[i] == s[i-1]. And need to add null to separate indexes.
 // Time complexity: O(n^2)
