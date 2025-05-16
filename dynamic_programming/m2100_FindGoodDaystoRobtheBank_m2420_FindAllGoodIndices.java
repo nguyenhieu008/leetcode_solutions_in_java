@@ -1,3 +1,38 @@
+// https://leetcode.com/problems/find-all-good-indices/description/
+
+class Solution {
+    public List<Integer> goodIndices(int[] nums, int k) {
+        int n = nums.length;
+        // nonIncreasing[i] = the length of non-increasing subarray ends at i
+        // nonDecreasing[i] = the length of non-decreasing subarray starts at i
+        int[] nonIncreasing = new int[n]; 
+        int[] nonDecreasing = new int[n];
+
+        Arrays.fill(nonIncreasing, 1);
+        Arrays.fill(nonDecreasing, 1);
+
+        for (int i = 1; i < n; i++) {
+            if (nums[i] <= nums[i-1]) {
+                nonIncreasing[i] = nonIncreasing[i-1] + 1;
+            }
+        }
+
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i] <= nums[i+1]) {
+                nonDecreasing[i] = nonDecreasing[i+1] + 1;
+            }
+        }
+
+        List<Integer> res = new ArrayList<>();
+        for (int i = 1; i < n - 1; i++) {
+            if (nonIncreasing[i - 1] >= k && nonDecreasing[i + 1] >= k) {
+                res.add(i);
+            }
+        }
+        return res;
+    }
+}
+
 // https://leetcode.com/problems/find-good-days-to-rob-the-bank/
 
 // Solution 1: Preprocess left and right to not calculating the length of non-increasing/non-decreasing repeatedly.
