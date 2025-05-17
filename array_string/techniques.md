@@ -15,7 +15,7 @@
   *  [isomorphic string](https://leetcode.com/problems/isomorphic-strings/)
   *  [Minimum Domino Rotations For Equal Row](https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/description/): Map to the possible values and calculate results, rather than compare the tops\[0\]
 * When it's hard to sovle the problem as a range, try to calculate at each item and contribute it to the final result, e.g. [trapping rain water](https://leetcode.com/problems/trapping-rain-water/description/)
-* Sometimes, process an item in the middle of something is difficult. We can restrict to only process at one end to the other end for easier (e.g. sort the array and go from smaless one, ...)
+* Sometimes, process an item in the middle of something is difficult. We can restrict to only process at one end to the other end for easier (e.g. sort the array and go from smalest one => no need to handle items at both sides, ...)
 * Whether we can preprocess to make the problem easier:
   * Sort
   * Add all items to a hash table
@@ -26,6 +26,10 @@
 * Sometimes, we apply some restrictions when processing then we no need to deal with complicated situation where the duplicates input make noise to the result, e.g.:
   *  [Ways to split](https://github.com/nguyenhieu008/leetcode_solutions_in_java/blob/main/array_string/sliding_window_binary_search_m1712.java) : (Keep condition "while (k < j ||" make it won't add negative value to the result
   *  [Longest consecutive subsequency](https://github.com/nguyenhieu008/leetcode_solutions_in_java/blob/main/hash_table/m128.java) : When adding item to set, avoid number already used => the new number will not be inside of a contiguous sequence => easier to handle.
+  *  [Increasing Triplet Subsequence](https://github.com/nguyenhieu008/leetcode_solutions_in_java/blob/main/array_string/m334_IncreasingTripletSubsequence.java) : When initialize small/mid numbers, we only initialize the mid number when it's really greater than other number before => We no need to deal with the case where mid and small are the same number, or mid is greater than small, but it's before small number => In this case, we need to define some state to understand that a number is not initialized and no need to deal with the situation of duplicates
+* When need to swap the values of integers in-places, we can utilize the large space of integer to store additional values without losing the original values, e.g.:
+  * [Build Array from Permutation](https://github.com/nguyenhieu008/leetcode_solutions_in_java/blob/main/array_string/e1920_BuildArrayfromPermutation.java) : Store/extrace the new and original value by modulo operation (use when the range of values is small enough and can only be used to store 2 values), combined = new * 1000 + old => new = combined / 1000, old = combine % 1000.
+  * [Game of Life](https://github.com/nguyenhieu008/leetcode_solutions_in_java/blob/main/array_string/matrix/m289_GameofLife.java) : States are store in bits, original bits in first bit, next states in second bit.
  
 ## Sliding window
 #### Substring
