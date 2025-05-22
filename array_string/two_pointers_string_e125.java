@@ -45,6 +45,22 @@ class Solution {
     }
 }
 
+// Solution 1b: Check palindrome by reverse:
+class Solution {
+    public boolean isPalindrome(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                sb.append(Character.toLowerCase(c));
+            }
+        }
+        if (sb.toString().equals(sb.reverse().toString())) {
+            return true;
+        }
+        return false;
+    }
+}
+
 // Solution 1: preprocess the string first. Then validate the palindrome as usual. It's a bit complicated and need more spaces
 // Time complexity: O(n);
 // Space complexity: O(n), for lower and filtered string
