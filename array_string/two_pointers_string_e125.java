@@ -20,6 +20,31 @@ class Solution {
     }
 }
 
+// Solution 1a: Build the string as normal but expand from middle to check for palindrome:
+class Solution {
+    public boolean isPalindrome(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                sb.append(Character.toLowerCase(c));
+            }
+        }
+        int n = sb.length();
+        // 5 -> left = 2. 4 -> left = 1
+        int left = (n - 1) / 2; 
+        int right = n / 2;
+
+        while (left >= 0 && right < n) {
+            if (sb.charAt(left) != sb.charAt(right)) {
+                return false;
+            }
+            left--; 
+            right++;
+        }
+        return true;
+    }
+}
+
 // Solution 1: preprocess the string first. Then validate the palindrome as usual. It's a bit complicated and need more spaces
 // Time complexity: O(n);
 // Space complexity: O(n), for lower and filtered string
