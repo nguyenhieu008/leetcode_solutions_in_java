@@ -187,6 +187,47 @@ class Solution {
     }
 }
 
+// No need dummy:
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode tail = head; // tail of reversed segment
+
+        while (tail.next != null) {
+            ListNode next = tail.next;
+
+            tail.next = next.next;
+            next.next = head;
+            head = next;
+        }
+        return head;
+    }
+}
+
+// Recursive approach:
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null) {
+            // Only get into this case if input head == null
+            return null;
+        }
+        if (head.next == null) {
+            return head;
+        }
+        // Because we reverse next node, the next node will become tail after reversed
+        ListNode tail = head.next;
+        
+        ListNode newHead = reverseList(tail);
+        tail.next = head;
+
+        // after get out of this function, head will become tail => point to null
+        head.next = null; 
+        return newHead;
+    }
+}
+
 // Iterative solution
 class Solution {
     public ListNode reverseList(ListNode head) {
