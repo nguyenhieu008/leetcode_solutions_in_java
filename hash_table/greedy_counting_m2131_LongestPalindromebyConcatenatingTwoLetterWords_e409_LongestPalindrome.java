@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/longest-palindrome-by-concatenating-two-letter-words/
+// EASY PROBLEM IS AT THE BOTTOM OF THIS FILE
 
 // Solution 1: Use hash map to store the existence of strings
 // Time complexity: O(n * l), where l is average length of word, l == 2 => O(n)
@@ -72,6 +73,29 @@ class Solution {
         }
         if (middle > 0) {
             return res + 2;
+        }
+        return res;
+    }
+}
+
+// https://leetcode.com/problems/longest-palindrome/description/
+class Solution {
+    public int longestPalindrome(String s) {
+        int size = 128; // ascii size, a bit redundant but won't affect implementation
+        int[] charCount = new int[size];
+
+        int res = 0;
+        for (char c : s.toCharArray()) {
+            if (charCount[c] > 0) {
+                res += 2;
+                charCount[c]--;
+            } else {
+                charCount[c]++;
+            }
+        }
+        if (res < s.length()) {
+            // add an arbitrary character to the middle
+            return res + 1;
         }
         return res;
     }
