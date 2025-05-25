@@ -77,6 +77,38 @@ class Solution {
     }
 }
 
+// Solution 2a: a bit better
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(0, head);
+
+        ListNode before = dummy;
+        for (int i = 1; i < left; i++) {
+            before = before.next;
+        }
+
+        ListNode tail = before.next;
+        ListNode curNode = tail;
+        ListNode prevNode = null;
+
+        for (int i = left; i <= right; i++) { 
+            ListNode nextNode = curNode.next;
+
+            curNode.next = prevNode;
+            prevNode = curNode;
+            curNode = nextNode;
+        }
+
+        ListNode after = curNode;
+        ListNode newHead = prevNode;
+
+        before.next = newHead;
+        tail.next = after;
+
+        return dummy.next;
+    }
+}
+
 /* Solution 3: We can think of it the recursive way.
 - If we need to reverse n node segment, what if we already have a (n - 1) nodes reversed then do it for n nodes.
 - e.g. A -> (n - 1) nodes -> Node N -> B
