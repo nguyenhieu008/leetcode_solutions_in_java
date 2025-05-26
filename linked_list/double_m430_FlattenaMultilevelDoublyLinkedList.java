@@ -55,3 +55,50 @@ class Solution {
         return curTail;
     }
 }
+
+// Solution 2: Elegant solution using stack
+// Reference: https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/solutions/154908/python-easy-solution-using-stack/
+
+class Solution {
+    public Node flatten(Node head) {
+        if (head == null) {
+            return null;
+        }
+
+        // stack is guaranteed to NOT contain any null value.
+        Stack<Node> stack = new Stack<>();
+        stack.push(head);
+        Node dummy = new Node();
+
+        Node prev = dummy; // Prev here just for the first case not throw exception
+
+        while (!stack.isEmpty()) {
+            // The curNode will traverse through the stack in the correct order of flattened list. It means:
+            //  - If no child => then go to next node;
+            //  - If has child => push next node first, to traverse after the child finished
+            //                 => then push child node, then traverse child node first.
+            //  - Store the prev and curNode, so we can rewire them.
+            Node curNode = stack.pop();
+
+            curNode.prev = prev;
+            prev.next = curNode;
+
+            if (curNode.next != null) {
+                // Always push next node into the stack
+                stack.push(curNode.next);
+            }
+            if (curNode.child != null) {
+
+                stack.push(curNode.child);
+                curNode.child = null;
+            }
+
+            prev = curNode;
+        }
+
+        head.prev = null;
+        return head;
+    }
+
+    
+}
