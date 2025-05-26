@@ -54,6 +54,14 @@ public class Solution {
 => If now, slow runs from head x steps => it reaches the 1st node of cycle
 	fast runs from meet point x steps => it reaches node (x + y) + x = x + (y + x) = x + cycle length => 1st node of cycle
 	*/
+
+// We reach here when there is a cycle. Assume:
+// - We need m steps to reach the node where cycles begin, called startNode
+// - y steps to go from startNode to the node where 2 pointers meet, called meetNode
+// => Need (m + y) steps to reach meetNode, and 2(m + y) still ends at meetNode
+// => ((m + y) + m) steps will be (y steps away) from meetNode, which means it is startNode
+// Meanwhile, from head, if we go m steps, it also reaches startNode.
+// => concurently go from head and startNode, when they meet, it is the startNode.
 public class Solution {
     public ListNode detectCycle(ListNode head) {
         ListNode slow = head;
