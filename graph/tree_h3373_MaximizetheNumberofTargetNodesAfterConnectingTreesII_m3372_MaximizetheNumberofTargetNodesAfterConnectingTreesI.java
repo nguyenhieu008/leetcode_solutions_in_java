@@ -78,6 +78,88 @@ class Solution {
     
 }
 
+// Solution 1: Intuition in solution 1a
+class Solution {
+    public int[] maxTargetNodes(int[][] edges1, int[][] edges2) {
+        boolean[] labels1 = labelNodes(edges1);
+        boolean[] labels2 = labelNodes(edges2);
+        int m = labels1.length, n = labels2.length;
+
+        int set1True = 0, set1False = 0;
+        int set2True = 0, set2False = 0;
+
+        for (int i = 0; i < m; i++) {
+            if (labels1[i]) {
+                set1True++;
+            } else {
+                set1False++;
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            if (labels2[i]) {
+                set2True++;
+            } else {
+                set2False++;
+            }
+        }
+        int maxSet2 = Math.max(set2True, set2False);
+
+        int[] res = new int[m];
+        for (int i = 0; i < m; i++) {
+            if (labels1[i]) {
+                res[i] = set1True + maxSet2;
+            } else {
+                res[i] = set1False + maxSet2;
+            }
+        }
+        return res;
+    }
+
+    private boolean[] labelNodes(int[][] edges) {
+        List<Integer>[] tree = buildTree(edges);
+        int n = tree.length;
+        boolean[] labels = new boolean[n];
+
+        dfs(tree, 0, -1, labels, true);
+
+        return labels;
+    }
+
+    // We label the nodes into 2 sets: odd and even set.
+    // The nodes in the same set will have even number of edges between them.
+    // In other words, all the nodes in the same set will be the target node to each other
+    // And size of each set will be the number of target nodes for each node in that set.
+    private void dfs(List<Integer>[] tree, int root, int parent, boolean[] labels, boolean label) {
+        // to check base case
+
+        labels[root] = label;
+
+        List<Integer> adjNodes = tree[root];
+        for (int adj : adjNodes) {
+            if (adj == parent) {
+                continue;
+            }
+            // Because it's tree, there is no cycle and each node will be visited once
+            dfs(tree, adj, root, labels, label ^ true); // level ^ 1 == 
+        }
+    }
+
+    private List<Integer>[] buildTree(int[][] edges) {
+        int n = edges.length + 1;
+        List<Integer>[] tree = new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            tree[i] = new ArrayList<>();
+        }
+        for (int[] e : edges) {
+            int u = e[0], v = e[1];
+            tree[u].add(v);
+            tree[v].add(u);
+        }
+        return tree;
+    }
+    
+}
 
 // https://leetcode.com/problems/maximize-the-number-of-target-nodes-after-connecting-trees-i/
 // Reference: https://leetcode.com/problems/maximize-the-number-of-target-nodes-after-connecting-trees-i/editorial/
