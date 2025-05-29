@@ -1,6 +1,16 @@
 // https://leetcode.com/problems/network-delay-time/description/
+
 // Solution: Dijkstra heap
 // Notice: the array dist can be optional, details in comment
+// Time complexity: O(E + VlogV), e = number of edges, when build graph. v = number of vertices, there are at most V nodes in heap.
+// In fact, I think it should be O(E + Vlog(v^2)). Worst case:
+// Edges: [1, 2, 1], [1, 3, 1000], [1, 4, 1000], [1, 5, 1000], [2, 3, 1], [2, 4, 900], [2, 5, 900], [3, 4, 1], [3, 5, 800], [4, 5, 1]
+// => queue will have the following in the INSERT ORDER (not the heap order):
+//     [[1, 0], [2, 1], [3, 1000], [4, 1000], [5, 1000], [3, 2], [4, 901], [5, 901], [4, 3], [5, 802], [5, 4]]
+// Popped items: [1, 0], [2, 1], [3, 2], [4, 3], [5, 4];
+// Leftover items: [3, 1000], [4, 1000], [5, 1000], [4, 901], [5, 901], [5, 802] => there are redundant items
+// => worst case: there are v^2 items
+// Space complexity: O(E + V), for the graph. Or can be O(E + V^2)
 
 class Solution {
     class Node {
