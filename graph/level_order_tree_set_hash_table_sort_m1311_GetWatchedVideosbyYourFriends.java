@@ -56,3 +56,143 @@ class Solution {
         return res;
     }
 }
+
+// Solution 1a: Use TreeSet to have the sort order. ALREADY USED IN AMAZON INTERVIEW.
+class Solution {
+    class VideoFrequency implements Comparable<VideoFrequency> {
+        String video;
+        int frequency;
+
+        VideoFrequency(String video, int frequency) {
+            this.video = video;
+            this.frequency = frequency;
+        }
+
+        @Override
+        public int compareTo(VideoFrequency that) {
+            if (this.frequency == that.frequency) {
+                return this.video.compareTo(that.video);
+            }
+            return this.frequency - that.frequency;
+        }
+    }
+    public List<String> watchedVideosByFriends(List<List<String>> watchedVideos, int[][] friends, int id, int level) {
+        int n = friends.length;
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(id);
+        int curLevel = 0;
+        boolean[] visited = new boolean[n];
+        visited[id] = true;
+
+        while (!q.isEmpty() && curLevel < level) {
+            int size = q.size();
+            // todo: update curLevel;
+            while (size-- > 0) {
+                int person = q.poll();
+
+                int[] curFriends = friends[person];
+                for (int f : curFriends) {
+                    if (!visited[f]) {
+                        q.offer(f);
+                        visited[f] = true;
+                    }
+                }
+            }
+            curLevel++;
+        }
+        
+        Map<String, Integer> videoCount = new HashMap<>();
+        Set<VideoFrequency> frequencySet = new TreeSet<>();
+        while (!q.isEmpty()) {
+            int person = q.poll();
+
+            List<String> videos = watchedVideos.get(person);
+            for (String v : videos) {
+                int newCount = videoCount.getOrDefault(v, 0) + 1;
+                videoCount.put(v, newCount);
+
+                if (newCount > 1) {
+                    VideoFrequency oldVideo = new VideoFrequency(v, newCount - 1);
+                    frequencySet.remove(oldVideo);
+                }
+                
+                VideoFrequency newVideo = new VideoFrequency(v, newCount);
+                frequencySet.add(newVideo);
+            }
+        }
+
+        List<String> res = new ArrayList<>();
+        for (VideoFrequency v : frequencySet) {
+            res.add(v.video);
+        }
+        return res;
+    }
+}
+
+// Solution 1: Complex code, but perform well
+class Solution {
+    class VideoFrequency implements Comparable<VideoFrequency> {
+        String video;
+        int frequency;
+
+        VideoFrequency(String video, int frequency) {
+            this.video = video;
+            this.frequency = frequency;
+        }
+
+        @Override
+        public int compareTo(VideoFrequency that) {
+            if (this.frequency == that.frequency) {
+                return this.video.compareTo(that.video);
+            }
+            return this.frequency - that.frequency;
+        }
+    }
+    public List<String> watchedVideosByFriends(List<List<String>> watchedVideos, int[][] friends, int id, int level) {
+        int n = friends.length;
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(id);
+        int curLevel = 0;
+        boolean[] visited = new boolean[n];
+        visited[id] = true;
+
+        while (!q.isEmpty() && curLevel < level) {
+            int size = q.size();
+            // todo: update curLevel;
+            while (size-- > 0) {
+                int person = q.poll();
+
+                int[] curFriends = friends[person];
+                for (int f : curFriends) {
+                    if (!visited[f]) {
+                        q.offer(f);
+                        visited[f] = true;
+                    }
+                }
+            }
+            curLevel++;
+        }
+        
+        Map<String, Integer> videoCount = new HashMap<>();
+        while (!q.isEmpty()) {
+            int person = q.poll();
+            List<String> videos = watchedVideos.get(person);
+            for (String v : videos) {
+                videoCount.put(v, videoCount.getOrDefault(v, 0) + 1);
+            }
+        }
+        List<VideoFrequency> list = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : videoCount.entrySet()) {
+            String video = entry.getKey();
+            int f = entry.getValue();
+            list.add(new VideoFrequency(video, f));
+        }
+        Collections.sort(list);
+
+        List<String> res = new ArrayList<>();
+        for (VideoFrequency v : list) {
+            res.add(v.video);
+        }
+        return res;
+    }
+}
