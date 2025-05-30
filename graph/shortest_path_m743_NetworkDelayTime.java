@@ -95,3 +95,54 @@ class Solution {
         return g;
     }
 }
+
+// Solution 2: Bellman Ford or Shortest Path Faster Algorigthm
+class Solution {
+
+    public int networkDelayTime(int[][] times, int n, int k) {
+        Map<Integer, Integer>[] g = buildGraph(times, n);
+
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[k] = 0;
+
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(k);
+
+        while (!q.isEmpty()) {
+            int curNode = q.poll();
+
+            Map<Integer, Integer> adjNodes = g[curNode];
+            for (int adj : adjNodes.keySet()) {
+                int w = adjNodes.get(adj);
+                int nextDist = dist[curNode] + w;
+                if (dist[adj] > nextDist) {
+                    dist[adj] = nextDist;
+                    q.offer(adj);
+                }
+            }
+        }
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            int d = dist[i];
+            if (d == Integer.MAX_VALUE) {
+                return -1;
+            }
+            res = Math.max(res, d);
+        }
+        return res;
+    }
+
+    private Map<Integer, Integer>[] buildGraph(int[][] times, int n) {
+        Map<Integer, Integer>[] g = new HashMap[n + 1];
+        for (int i = 1; i <= n; i++) {
+            g[i] = new HashMap<>();
+        }
+        for (int[] t : times) {
+            int u = t[0], v = t[1], w = t[2];
+            g[u].put(v, w);
+        }
+        return g;
+    }
+      
+}
