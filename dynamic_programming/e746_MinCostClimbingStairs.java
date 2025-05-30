@@ -17,3 +17,19 @@ class Solution {
         return prevCost1;
     }
 }
+
+// Solution 2: Do it the reverse direction
+// costNext2 = min cost from the 2-next-steps to the top
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        int n = cost.length;
+        int costNext2 = cost[n - 1], costNext1 = cost[n - 2];
+
+        for (int i = n - 3; i >= 0; i--) {
+            int curCost = Math.min(costNext2, costNext1) + cost[i];
+            costNext2 = costNext1;
+            costNext1 = curCost;
+        }
+        return Math.min(costNext2, costNext1);
+    }
+}
