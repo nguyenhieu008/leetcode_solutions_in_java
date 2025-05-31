@@ -19,6 +19,41 @@ class Solution {
     }
 }
 
+// Solution 3: top-down memo
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if (n == 1) {
+            return nums[0];
+        }
+        int[] dp = new int[n];
+        Arrays.fill(dp, -1);
+        dp[0] = nums[0];
+        dp[1] = nums[1];
+
+        return Math.max(rob(nums, n - 1, dp), rob(nums, n - 2, dp));
+    }
+
+    // Assume there 3 houses, 0 - 1 - 2 - 3 - 4. 
+    // How many cases:
+    // - Rob house 3 then end
+    // - Rob house 4 then 2
+    // - Rob house 4 then 1, skip 2 - 3
+    // - Rob house 4, but want to rob house 0, -> definitely rob house 2 as it maximize the amount
+    private int rob(int[] nums, int i, int[] dp) {
+        if (i < 0) {
+            return 0;
+        }
+        if (dp[i] != - 1) {
+            return dp[i];
+        }
+
+        int res = nums[i] + Math.max(rob(nums, i - 2, dp), rob(nums, i - 3, dp));
+        dp[i] = res;
+        return res;
+    }   
+}
+
 // Solution 1: DP with tabulation. Easier to code/visualize and reasoning about the dp fomular.
 class Solution {
     public int rob(int[] nums) {
