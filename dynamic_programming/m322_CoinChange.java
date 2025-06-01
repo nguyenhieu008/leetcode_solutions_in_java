@@ -25,6 +25,43 @@ class Solution {
     }
 }
 
+// Solution: 1a: dp top-down and memoize. Different implementation.
+class Solution {
+    int[] dp;
+    private int INFINITY = 1_000_000_000;
+    private int UNSET = -1;
+
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        dp = new int[amount + 1];
+        Arrays.fill(dp, UNSET);
+        dp[0] = 0;
+
+        int res = change(coins, amount);
+
+        return res == INFINITY ? -1 : res;
+    }
+
+    private int change(int[] coins, int amount) {
+        if (dp[amount] != UNSET) {
+            return dp[amount];
+        }
+
+        int res = INFINITY;
+        for (int c : coins) {
+            // Try all possible coins
+            if (c > amount) {
+                continue;
+            }
+            
+            res = Math.min(res, 1 + change(coins, amount - c));
+        }
+        dp[amount] = res;
+
+        return res;
+    }
+}
+
 // Solution 1: DP memoization, top-down.
 // Same solution as solution, but we try to solve the dp(amount) first => it will yield the problem to find dp(i) where i < amount.
 // We use memoization to limit the call to each amount only, beware that we need 3 states, undefined = INFINITY, noWayToChange = -1, canChange(with minimum) >= 0
