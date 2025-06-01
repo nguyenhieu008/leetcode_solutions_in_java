@@ -6,29 +6,40 @@ class Solution {
     public double knightProbability(int n, int k, int r, int c) {
         /*
             A state can be define as (moves, row, col)
-            dp[move][row][col]: probability of the knight land at [row, col] when there are "move" moves left
+            Starting from [row, col], calling recusively with next step and next [nextRow, nextCol].
+            If it still in the board, continue to go. 
+
+            dp[move][row][col]: probability of the knight currently at [row, col], will remains on the board after "move" moves.
+            
         */
 
-        double[][][] dp = new double[k+1][n][n];
+        double[][][] dp = new double[n][n][k + 1];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                // When no moves left, the knight will be definitely on the board => base case
+                // => no need base case in recursive function
+                dp[i][j][0] = 1;
+            }
+        }
         return calculate(n, k, r, c, dp);
     }
 
     // k how many steps left
+    // return the probability of the knight at [row, col] remains on the board after k steps
     private double calculate(int n, int k, int row, int col, double[][][] dp) {
         if (row < 0 || row >= n || col < 0 || col >= n) {
             return 0L;
         }
-        if (k == 0) {
-            return 1L;
+        if (dp[row][col][k] > 0) {
+            // Because if the knight still on the board, it definitely has chance to remains on the board after several moves => dp[k][row][col] > 0 => we can use it to check if the dp value is set (no need for UNSET value)
+            return dp[row][col][k];
         }
-        if (dp[k][row][col] > 0) {
-            return dp[k][row][col];
-        }
+
         double res = 0;
         for (int[] d : dirs) {
             res += 0.125 * calculate(n, k - 1, row + d[0], col + d[1], dp);
         }
-        dp[k][row][col] = res;
+        dp[row][col][k] = res;
         return res;
     }
 
