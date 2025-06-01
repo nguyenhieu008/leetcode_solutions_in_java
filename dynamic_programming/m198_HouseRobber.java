@@ -19,6 +19,40 @@ class Solution {
     }
 }
 
+// Solution 3a: top-down concise
+class Solution {
+    private int UNSET = -1;
+    public int rob(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, UNSET);
+
+        return rob(nums, n - 1, dp);
+    }
+
+    // Assume there 3 houses, 0 - 1 - 2 - 3 - 4. 
+    // How many cases:
+    // - Rob house 3 then end
+    // - Rob house 4 then possible rob house 2 or not
+    //
+    // - return the result at house 4 to be the max between 2 above cases
+    // - We get max as we go.
+    private int rob(int[] nums, int i, int[] dp) {
+        if (i < 0) {
+            return 0;
+        }
+        if (dp[i] != UNSET) {
+            return dp[i];
+        }
+
+        int res = Math.max(nums[i] + rob(nums, i - 2, dp), rob(nums, i - 1, dp));
+        dp[i] = res;
+        return res;
+    }
+
+    
+}
+
 // Solution 3: top-down memo
 class Solution {
     public int rob(int[] nums) {
