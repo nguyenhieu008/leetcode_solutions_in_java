@@ -47,3 +47,35 @@ class Solution {
         return s.substring(i);
     }
 }
+
+// https://leetcode.com/problems/find-the-lexicographically-largest-string-from-the-box-i/description/
+// Same as the above function. Just try to cut the string with max possible length
+class Solution {
+
+    public int largestIdx(String s) {
+        int i = 0, j = 1, k = 0, n = s.length();
+        while (j + k < n) {
+            char c1 = s.charAt(i + k), c2 = s.charAt(j + k);
+            if (c1 == c2) {
+                k++;
+            } else if (c1 < c2) {
+                i = Math.max(i + k + 1, j);
+                j = i + 1;
+                k = 0;
+            } else {
+                j = j + k + 1;
+                k = 0;
+            }
+        }
+        return i;
+    }
+
+    public String answerString(String word, int numFriends) {
+        if (numFriends == 1) {
+            return word;
+        }
+        int idx = largestIdx(word);
+        int n = word.length(), m = n - numFriends + 1;
+        return word.substring(idx, Math.min(n, idx + m));
+    }
+}
