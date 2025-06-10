@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/
+
 class Solution {
     public int maxDifference(String s) {
         int[] mpp = new int[26];
