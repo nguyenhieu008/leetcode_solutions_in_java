@@ -3,6 +3,7 @@
 // Solution 2: DP longest subsequency, but O(n^2) and no need to implement.
 
 // Solution 1: Greedy. Always add a new word to result when we encounter a new item in groups
+
 class Solution {
     public List<String> getLongestSubsequence(String[] words, int[] groups) {
         int n = words.length;
